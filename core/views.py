@@ -64,24 +64,24 @@ def handle_response(request):
                 "projects",
                 "certificates",
             )
-            prompt = form.cleaned_data["prompt"]
+            form.cleaned_data["prompt"]
             messages.append(
                 {
                     "role": "user",
-                    "content": f"Use this prompt {prompt} and an answer from {candidate_data}",
+                    "content": f"You have access to this dataset of candidate resumes:{candidate_data}, You are an Ai assistant that helps the user query this data, Answer only using the data above, or say 'not found' if unavaialble.",
                 }
             )
             response = openai.chat.completions.create(
                 model="gpt-4o-2024-08-06", messages=messages
             )
             final_response = response.choices[0].message.content
-            messages.append({"role": final_response})
+            messages.append({"role": "assistant", "content": final_response})
             request.session["final_response"] = final_response
             request.session["messages"] = messages
-            return redirect("chat_response")
+            return redirect("chat_prompt")
     else:
         form = PromptForm()
-        final_response = request.sessions.get("final_response", "")
+    final_response = request.session.get("final_response", "")
 
     return render(
         request,
