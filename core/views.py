@@ -64,11 +64,11 @@ def handle_response(request):
                 "projects",
                 "certificates",
             )
-            form.cleaned_data["prompt"]
+            prompt = form.cleaned_data["prompt"]
             messages.append(
                 {
                     "role": "user",
-                    "content": f"You have access to this dataset of candidate resumes:{candidate_data}, You are an Ai assistant that helps the user query this data, Answer only using the data above, or say 'not found' if unavaialble.",
+                    "content": f"You have access to this dataset of candidate resumes:{candidate_data}, THe user is asking: {prompt}, Answer only using the data above, or say 'not found' if unavaialble.",
                 }
             )
             response = openai.chat.completions.create(
