@@ -129,6 +129,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 OPENAI_KEY = os.environ.get("OPENAI_KEY")
 TESSERACT_CMD = env("TESSERACT_CMD", default="tesseract")
 
+# Rate limiting settings
+RATE_LIMIT_PER_MINUTE = env.int("RATE_LIMIT_PER_MINUTE", default=20)
+RATE_LIMIT_WINDOW_SECONDS = env.int("RATE_LIMIT_WINDOW_SECONDS", default=3600)
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
