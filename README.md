@@ -98,7 +98,6 @@ A simple Django-based application that handles CV uploads (PDF or Word), uses OC
 
 1. **Install Dependencies**
 
-
     pip install -r requirements.txt
 
 - For tesseract :
@@ -116,8 +115,6 @@ A simple Django-based application that handles CV uploads (PDF or Word), uses OC
 ---
 - For Redis :
     - **Ubuntu/Debian**
-    Ubuntu/Debian:
-r
      ```bash
     sudo apt-get update
     sudo apt-get install redis-server
@@ -126,15 +123,18 @@ r
      ```
 
 2. **Configure Environment Variables**
-    Copy .env.example to .env and fill in:
-        SECRET_KEY
-        DEBUG
-        OPENAI_KEY
+
+-   Copy .env.example to .env and fill in:
+-       SECRET_KEY
+-       DEBUG
+-       OPENAI_KEY
 
 
 3. **Run Migrations**
-    python manage.py migrate
+
+-   python manage.py migrate
 
 
 4. **Start the Server**
-    python manage.py runserver
+
+-   python manage.py runserver
