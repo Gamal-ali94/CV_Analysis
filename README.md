@@ -94,6 +94,27 @@ A simple Django-based application that handles CV uploads (PDF or Word), uses OC
    The conversation history is retained in the session, allowing follow-up questions without losing context.
 
 ---
+## Running Tests
+
+The project includes a comprehensive test suite covering models, forms, views, and middleware:
+
+1. **Ensure Redis is Running**
+   - Tests use Redis for rate limiting functionality
+   - Make sure Redis server is active before running tests
+
+2. **Run the Tests**
+   ```bash
+   python manage.py test core.tests
+   ```
+
+3. **What's Being Tested**
+
+   - **Model Tests**: Verify `Candidate` model creation and field storage
+   - **Form Tests**: Validate CV file upload restrictions (format, size)
+   - **View Tests**: Check page rendering and template usage
+   - **Rate Limit Tests**: Confirm request throttling (10 requests/hour/IP)
+
+---
 ## Installation & Setup
 
 1. **Install Dependencies**
