@@ -19,7 +19,6 @@ TEST_MIDDLEWARE = [
 
 class CandidateModelTests(TestCase):
     def setUp(self):
-        """Set up test data"""
         self.candidate = Candidate.objects.create(
             personal_info={
                 "name": "John Doe",
@@ -38,11 +37,9 @@ class CandidateModelTests(TestCase):
         )
 
     def test_candidate_str_method(self):
-        """Test the string representation of Candidate model"""
         self.assertEqual(str(self.candidate), "Candidate: John Doe")
 
     def test_candidate_creation(self):
-        """Test if candidate is created correctly"""
         self.assertTrue(isinstance(self.candidate, Candidate))
         self.assertEqual(self.candidate.personal_info["name"], "John Doe")
         self.assertEqual(len(self.candidate.skills), 3)
@@ -51,9 +48,7 @@ class CandidateModelTests(TestCase):
 @override_settings(MIDDLEWARE=TEST_MIDDLEWARE)
 class FormTests(TestCase):
     def setUp(self):
-        """Set up test data"""
         self.client = Client()
-        # Create a minimal valid PDF file for testing
         self.test_file = SimpleUploadedFile(
             "test_cv.pdf",
             b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Resources<<>>>>endobj\nxref\n0 4\n0000000000 65535 f\n0000000015 00000 n\n0000000061 00000 n\n0000000114 00000 n\ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n190\n%%EOF\n",
@@ -85,7 +80,6 @@ class FormTests(TestCase):
 @override_settings(MIDDLEWARE=TEST_MIDDLEWARE)
 class ViewTests(TestCase):
     def setUp(self):
-        """Set up test data"""
         self.client = Client()
         self.candidate = Candidate.objects.create(
             personal_info={
@@ -114,7 +108,6 @@ class ViewTests(TestCase):
 @override_settings(MIDDLEWARE=TEST_MIDDLEWARE)
 class RateLimitMiddlewareTests(TestCase):
     def setUp(self):
-        """Set up test data"""
         self.client = Client()
         # Clear the cache before testing
         cache.clear()

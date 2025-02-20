@@ -15,18 +15,17 @@ def extract_text_from_pdf(pdf_path):
     This function first attempts to extract text directly using pdfplumber.
     If no text is found on a page, it falls back to OCR using pytesseract.
 
-    Args:
-        pdf_path (str): Path to the PDF file to be processed.
+    pdf_path (str): Path to the PDF file to be processed.
 
-    Returns:
-        str: Extracted text from all pages of the PDF, with each page's
-             content separated by newlines.
+
+    Extracted text from all pages of the PDF, with each page's
+    content separated by newlines.
 
     Note:
         The function uses Tesseract OCR with specific configuration:
         - Language: English
         - PSM Mode: 4 (Assume a single column of text)
-        - OEM Mode: 3 (Default)
+        - OEM Mode: 3
     """
 
     text_data = set()
@@ -48,8 +47,17 @@ def extract_text_from_pdf(pdf_path):
 
 def extract_text_from_docx(docx_path):
     """
-    Extract structured text from a .docx file using python-docx.
-    Returns a string combining paragraphs
+     Extracts text from a .docx (Word) file using python-docx.
+
+    This function reads each paragraph in the `.docx` document.
+    It also adds a hyphen prefix ("- ") to paragraphs that are
+    identified as bullet, list, or numbered styles.
+
+    docx_path (str): Path to the .docx file to be processed.
+
+    str: A combined string of all paragraphs in the document,
+        separated by newlines. Bulleted or numbered items
+        are prefixed with "- ".
     """
     doc = Document(docx_path)
     text_data = set()
@@ -65,6 +73,14 @@ def extract_text_from_docx(docx_path):
 
 
 def extract_text_from_file(file_path):
+    """
+    Determines the file type (PDF or .docx) and extracts its text.
+
+    This function inspects the file extension:
+      - If it ends with `.pdf`, it calls `extract_text_from_pdf()`.
+      - If it ends with `.docx`, it calls `extract_text_from_docx()`.
+      - Otherwise, raises a ValueError for unsupported formats.
+    """
     extension = os.path.splitext(file_path)[1].lower()
     if extension == ".pdf":
         return extract_text_from_pdf(file_path)

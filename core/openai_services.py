@@ -6,22 +6,22 @@ openai.api_key = settings.OPENAI_KEY
 
 def parse_resume_with_llm(raw_text: str):
     """
-    Parse resume text using OpenAI's Large Language Model.
+    Parse resume text.
 
     This function takes raw text extracted from a resume and uses OpenAI's GPT model
     to structure it into predefined categories according to a specific schema.
 
-    Args:
-        raw_text (str): The raw text extracted from the resume document.
 
-    Returns:
-        str: A JSON string containing structured resume data with the following sections:
-            - personal_info: Basic information like name, email, phone, address
-            - education: List of educational qualifications
-            - work_experience: List of work experiences with details
-            - skills: List of technical and soft skills
-            - projects: List of projects with descriptions
-            - certificates: List of certifications
+    raw_text: The raw text extracted from the resume document.
+
+
+    A JSON string containing structured resume data with the following sections:
+        - personal_info: Basic information like name, email, phone, address
+        - education: List of educational qualifications
+        - work_experience: List of work experiences with details
+        - skills: List of technical and soft skills
+        - projects: List of projects with descriptions
+        - certificates: List of certifications
 
     Raises:
         openai.error.OpenAIError: If there's an issue with the OpenAI API call

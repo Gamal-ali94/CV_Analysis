@@ -12,6 +12,21 @@ from .openai_services import parse_resume_with_llm
 
 # Create your views here.
 def upload_cv(request):
+    """
+    Handle the CV upload process.
+
+    1. Renders a form (CandidateForm) to upload a CV (PDF or DOCX).
+    2. On POST:
+       - Validates the form.
+       - Creates a Candidate model instance.
+       - Attempts to retrieve the file path; if no file, raises an error.
+       - Extracts text from the uploaded CV (OCR if needed).
+       - Sends the text to OpenAI GPT to parse into structured data (JSON).
+       - If parsing fails or an exception occurs, shows an error message and
+         deletes the Candidate.
+       - Otherwise, populates the Candidate fields from the parsed JSON and saves.
+       - Redirects to candidate_view on success.
+    """
     if request.method == "POST":
         form = CandidateForm(request.POST, request.FILES)
         if form.is_valid():
@@ -54,11 +69,23 @@ def upload_cv(request):
 
 
 def candidate_view(request, pk):
+    """
+    Display the parsed CV data for a single Candidate.
+    """
     candidate = Candidate.objects.get(pk=pk)
     return render(request, "core/candidate.html", {"candidate": candidate})
 
 
 def handle_response(request):
+    """
+    Provide a chatbot-like interface for querying candidate data.
+
+    The conversation history is kept in session under "messages".
+    - Each user prompt is appended as a 'user' role message.
+    - The code then calls OpenAI (gpt-4o model) with these messages.
+    - The assistant's reply is stored as "assistant" role, and
+      saved to session under "final_response" for display.
+    """
     messages = request.session.get("messages", [])
     if request.method == "POST":
         form = PromptForm(request.POST)
