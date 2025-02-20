@@ -1,16 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload CV</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload CV</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px auto;
+      max-width: 700px;
+      line-height: 1.6;
+      background-color: #fafafa;
+    }
+    h1, h2 {
+      margin-bottom: 0.5rem;
+    }
+    .upload-container {
+      background: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin-top: 2rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    form p {
+      margin-bottom: 0.8rem;
+    }
+    button {
+      align-self: flex-start;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background-color: #2c7be5;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.8rem;
+    }
+    button:hover {
+      background-color: #1a5cb8;
+    }
+    .instructions {
+      background: #fff;
+      border-left: 4px solid #2c7be5;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .instructions p {
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-    <h1>Upload CV</h1>
+  <h1>Upload CV</h1>
+
+  <div class="instructions">
+    <p>Please upload your CV in <strong>PDF</strong> or <strong>DOCX</strong> format (max 5MB).
+       After uploading, we will parse and analyze your CV for insights.</p>
+  </div>
+
+  <div class="upload-container">
     <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload</button>
+    </form

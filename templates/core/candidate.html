@@ -1,17 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Candidate Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px auto;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      margin-bottom: 0.5rem;
+    }
+    hr {
+      margin: 1.5rem 0;
+    }
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      margin-top: 2rem;
+    }
+    .highlight {
+      font-weight: bold;
+    }
+    .info-block {
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <h1>Candiate_Profile</h1>
-    <h1>personal details
-        <ul>
-            <li>Name: {{candidate.personal_info.name}}</li>
-            <li> Email : {{candidate.personal_info.email}}</li>
-        </ul>
-    </h1>
+  <h1>Candidate Profile</h1>
+
+  <!-- Personal Info -->
+  <div class="info-block">
+    <h2 class="section-title">Personal Information</h2>
+    <ul>
+      <li><span class="highlight">Name:</span> {{ candidate.personal_info.name }}</li>
+      <li><span class="highlight">Email:</span> {{ candidate.personal_info.email }}</li>
+      <li><span class="highlight">Phone:</span> {{ candidate.personal_info.phone }}</li>
+      <li><span class="highlight">Address:</span> {{ candidate.personal_info.address }}</li>
+    </ul>
+  </div>
+
+  <!-- Education -->
+  <div class="info-block">
+    <h2 class="section-title">Education</h2>
+    {% if candidate.education %}
+      <ul>
+        {% for edu in candidate.education %}
+        <li>
+          <strong>Degree:</strong> {{ edu.degree }} <br/>
+          <strong>Institution:</strong> {{ edu.institution }} <br/>
+          <strong>Year:</strong> {{ edu.year }}
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No education data found.</p>
+    {% endif %}
+  </div>
+
+  <!-- Work Experience -->
+  <div class="info-block">
+    <h2 class="section-title">Work Experience</h2>
+    {% if candidate.work_experience %}
+      <ul>
+        {% for job in candidate.work_experience %}
+        <li>
+          <strong>Job Title:</strong> {{ job.job_title }} <br/>
+          <strong>Company:</strong> {{ job.company }} <br/>
+          <strong>Start Date:</strong> {{ job.start_date }} <br/>
+          <strong>End Date:</strong> {{ job.end_date }} <br/>
+          <strong>Responsibilities:</strong> {{ job.responsibilities }}
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No work experience data found.</p>
+    {% endif %}
+  </div>
+
+  <!-- Skills -->
+  <div class="info-block">
+    <h2 class="section-title">Skills</h2>
+    {% if candidate.skills %}
+      <ul>
+        {% for skill in candidate.skills %}
+        <li>{{ skill }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No skills listed.</p>
+    {% endif %}
+  </div>
+
+  <!-- Projects -->
+  <div class="info-block">
+    <h2 class="section-title">Projects</h2>
+    {% if candidate.projects %}
+      <ul>
+        {% for proj in candidate.projects %}
+        <li>
+          <strong>Project Name:</strong> {{ proj.project_name }} <br/>
+          <strong>Description:</strong> {{ proj.description }} <br/>
+          <strong>Technologies:</strong> {{ proj.technologies }}
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No project data found.</p>
+    {% endif %}
+  </div>
+
+  <!-- Certificates -->
+  <div class="info-block">
+    <h2 class="section-title">Certificates</h2>
+    {% if candidate.certificates %}
+      <ul>
+        {% for cert in candidate.certificates %}
+        <li>
+          <strong>Certificate Name:</strong> {{ cert.certificate_name }} <br/>
+          <strong>Issued By:</strong> {{ cert.issued_by }} <br/>
+          <strong>Year:</strong> {{ cert.year }}
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No certificates found.</p>
+    {% endif %}
+  </div>
+
+  <hr />
+  <p>Last updated on: {{ candidate.updated_at }}</p>
 </body>
 </html>

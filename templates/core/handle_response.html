@@ -1,18 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat Prompt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px auto;
+      max-width: 700px;
+      line-height: 1.6;
+      background-color: #fefefe;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+    .chat-container {
+      background: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin-top: 2rem;
+    }
+    .response-block {
+      background: #fff;
+      border-left: 4px solid #2c7be5;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap; /* preserve line breaks from LLM response */
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    form p {
+      margin-bottom: 0.8rem;
+    }
+    button {
+      align-self: flex-start;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background-color: #2c7be5;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.8rem;
+    }
+    button:hover {
+      background-color: #1a5cb8;
+    }
+  </style>
 </head>
 <body>
-    {%if final_response%}
-        {{final_response}}
-    {%endif%}
-    <form action="" method = 'POST'>
-        {%csrf_token%}
-        {{form.as_p}}
-        <button type="submit">Send</button>
+  <h1>Chat with the CV Data</h1>
+
+  {% if final_response %}
+    <div class="response-block">
+      {{ final_response }}
+    </div>
+  {% endif %}
+
+  <div class="chat-container">
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Send</button>
     </form>
+  </div>
 </body>
 </html>

@@ -16,7 +16,14 @@ def upload_cv(request):
         form = CandidateForm(request.POST, request.FILES)
         if form.is_valid():
             candidate = form.save()
-            file_path = candidate.uploaded_file.path
+            try:
+                file_path = candidate.uploaded_file.path
+            except ValueError:
+                messages.error(
+                    request, "No file was provided, Upload a PDF or DOCX file."
+                )
+                candidate.delete()
+                return redirect("upload_cv")
             extracted_text = extract_text_from_file(file_path)
             try:
                 candidate_data = json.loads(parse_resume_with_llm(extracted_text))
