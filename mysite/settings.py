@@ -127,7 +127,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 OPENAI_KEY = os.environ.get("OPENAI_KEY")
-
+TESSERACT_CMD = env("TESSERACT_CMD", default="tesseract")
 
 CACHES = {
     "default": {

@@ -1,20 +1,34 @@
-import pdfplumber
-import pytesseract
-from docx import Document
-from PIL import Image
-import tempfile
 import os
 
+import pdfplumber
+import pytesseract
+from django.conf import settings
+from docx import Document
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Users\JIM\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = settings.TESSERACT_CMD
 
 
 def extract_text_from_pdf(pdf_path):
     """
-    Extracts text from a PDF.
-    1- Ties to read text with pdfplumber.
-    2- If no text is found on a page, tries to read text with pytesseract.
+    Extracts text from a PDF file using a combination of pdfplumber and OCR.
+
+    This function first attempts to extract text directly using pdfplumber.
+    If no text is found on a page, it falls back to OCR using pytesseract.
+
+    Args:
+        pdf_path (str): Path to the PDF file to be processed.
+
+    Returns:
+        str: Extracted text from all pages of the PDF, with each page's
+             content separated by newlines.
+
+    Note:
+        The function uses Tesseract OCR with specific configuration:
+        - Language: English
+        - PSM Mode: 4 (Assume a single column of text)
+        - OEM Mode: 3 (Default)
     """
+
     text_data = set()
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
@@ -23,13 +37,12 @@ def extract_text_from_pdf(pdf_path):
                 text_data.add(text)
             else:
                 page_img = page.to_image(resolution=400)
-                pil_image = page_img.original.convert('L')
+                pil_image = page_img.original.convert("L")
                 ocr_text = pytesseract.image_to_string(
-                    pil_image,
-                    lang="eng",
-                    config="--psm 4 --oem 3")
+                    pil_image, lang="eng", config="--psm 4 --oem 3"
+                )
                 text_data.add(ocr_text)
-    
+
     return "\n".join(text for text in text_data)
 
 
@@ -50,12 +63,12 @@ def extract_text_from_docx(docx_path):
 
     return "\n".join(text for text in text_data)
 
+
 def extract_text_from_file(file_path):
     extension = os.path.splitext(file_path)[1].lower()
     if extension == ".pdf":
         return extract_text_from_pdf(file_path)
     elif extension == ".docx":
-        return extract_text_from_docx(file_path)    
+        return extract_text_from_docx(file_path)
     else:
-        raise ValueError(f"Unsupported file format")
-
+        raise ValueError("Unsupported file format")
