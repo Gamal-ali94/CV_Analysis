@@ -124,10 +124,10 @@ A simple Django-based application that handles CV uploads (PDF or Word), uses OC
 
 2. **Configure Environment Variables**
 
--   Copy .env.example to .env and fill in:
-        - SECRET_KEY
-        - DEBUG
-        - OPENAI_KEY
+- Copy .env.example to .env and fill in:
+    - SECRET_KEY
+    - DEBUG
+    - OPENAI_KEY
 
 
 3. **Run Migrations**
